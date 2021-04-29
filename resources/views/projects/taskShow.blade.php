@@ -1,0 +1,210 @@
+<div class="card bg-none card-box">
+    <div class="row">
+        <div class="col-12 col-md-6 col-lg-6">
+            <div class="form-group">
+                <b class="text-sm">{{ __('Title')}} :</b>
+                <p class="m-0 p-0 text-sm">{{$task->title}}</p>
+            </div>
+        </div>
+        <div class="col-12 col-md-6 col-lg-6">
+            <div class="form-group">
+                <b class="text-sm">{{ __('Priority')}} :</b>
+                <p class="m-0 p-0 text-sm">{{ucfirst($task->priority)}}</p>
+            </div>
+        </div>
+        <div class="col-12">
+            <div class="form-group">
+                <b class="text-sm">{{ __('Description')}} :</b>
+                <p class="m-0 p-0 text-sm">{{(!empty($task->description) ? $task->description : '-')}}</p>
+            </div>
+        </div>
+        <div class="col-12 col-md-4 col-lg-4">
+            <div class="form-group">
+                <b class="text-sm">{{ __('Start Date')}} :</b>
+                <p class="m-0 p-0 text-sm">{{$task->start_date}}</p>
+            </div>
+        </div>
+        <div class="col-12 col-md-4 col-lg-4">
+            <div class="form-group">
+                <b class="text-sm">{{ __('Due Date')}} :</b>
+                <p class="m-0 p-0 text-sm">{{$task->due_date}}</p>
+            </div>
+        </div>
+        <div class="col-12 col-md-4 col-lg-4">
+            <div class="form-group">
+                <b class="text-sm">{{ __('Milestone')}} :</b>
+                <p class="m-0 p-0 text-sm">{{!empty($task->milestone)?$task->milestone->title:''}}</p>
+            </div>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-12">
+            <ul class="nav nav-tabs" id="myTab" role="tablist">
+                <li>
+                    <a class="active" id="home-tab" data-toggle="tab" href="#home" role="tab" aria-controls="home" aria-selected="true"> {{__('Checklist')}} </a>
+                </li>
+                <li>
+                    <a id="profile-tab" data-toggle="tab" href="#profile" role="tab" aria-controls="profile" aria-selected="false"> {{__('Comments')}} </a>
+                </li>
+                <li>
+                    <a id="contact-tab" data-toggle="tab" href="#contact" role="tab" aria-controls="contact" aria-selected="false"> {{__('Files')}} </a>
+                </li>
+            </ul>
+
+            <div class="tab-content pt-4" id="myTabContent">
+                <div class="tab-pane fade show active" id="home" role="tabpanel" aria-labelledby="home-tab">
+                    @can('create checklist')
+                        @if(\Auth::user()->type!='client' || (\Auth::user()->type=='client' && in_array('show checklist',$perArr)))
+                            <div class="tab-pane fad active" id="tab_1_3">
+                                <div class="row">
+                                    @if(\Auth::user()->type!='client' || (\Auth::user()->type=='client' && in_array('create checklist',$perArr)))
+                                        <div class="col-md-11">
+                                            <div class="row mb-10">
+                                                <div class="col-md-6 font-weight-bold text-sm">{{__('Progress')}}</div>
+                                                <div class="col-md-6 font-weight-bold text-sm text-right">
+                                                    <div class="progress-wrap">
+                                                        <span class="progressbar-label custom-label" style="margin-top: -9px !important;margin-left: .7rem">0%</span>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="text-left">
+                                                <div class="custom-widget__item flex-fill">
+                                                    <div class="custom-widget__progress d-flex  align-items-center">
+                                                        <div class="progress" style="height: 5px;width: 100%;">
+                                                            <div class="progress-bar" role="progressbar" aria-valuenow="100" aria-valuemin="0" aria-valuemax="100" id="taskProgress"></div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-1">
+                                            <div class="text-right mb-1">
+                                                <a href="#" class="btn badge-blue btn-xs rounded-pill my-auto text-white" data-toggle="collapse" data-target="#form-checklist"><i class="fa fa-plus"></i></a>
+                                            </div>
+                                        </div>
+                                    @endif
+                                    <form method="POST" id="form-checklist" class="collapse col-md-12 pt-2" data-action="{{ route('task.checklist.store',[$task->id]) }}">
+                                        @csrf
+                                        <div class="form-group">
+                                            <label class="form-control-label">{{__('Name')}}</label>
+                                            <input type="text" name="name" class="form-control checklist-name" required placeholder="{{__('Checklist Name')}}">
+                                        </div>
+                                        <div class="text-right">
+                                            <div class="btn-group mb-2 ml-2 d-none d-sm-inline-block">
+                                                <button type="submit" class="btn badge-blue btn-xs rounded-pill my-auto text-white submit-checklist">{{ __('Create')}}</button>
+                                            </div>
+                                        </div>
+                                    </form>
+                                </div>
+
+                                <div class="row">
+                                    <ul class="col-md-12 mt-3 text-sm" id="check-list">
+                                        @foreach($task->taskCheckList as $checkList)
+                                            <li class="media">
+                                                <div class="media-body">
+                                                    <h5 class="mt-0 mb-1 font-weight-bold"></h5>
+                                                    <div class="row">
+                                                        <div class="col-8">
+                                                            <div class="custom-control custom-checkbox checklist-checkbox">
+                                                                @can('create checklist')
+                                                                    @if(\Auth::user()->type!='client' || (\Auth::user()->type=='client' && in_array('edit checklist',$perArr)))
+                                                                        <input type="checkbox" id="checklist-{{$checkList->id}}" class="custom-control-input taskCheck" {{($checkList->status==1)?'checked':''}} value="{{$checkList->id}}" data-url="{{route('task.checklist.update',[$checkList->task_id,$checkList->id])}}">
+                                                                        <label for="checklist-{{$checkList->id}}" class="custom-control-label">{{$checkList->name}}</label>
+                                                                    @else
+                                                                        <p class="mb-0">{{$checkList->name}}</p>
+                                                                    @endif
+                                                                @endcan
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-4">
+                                                            <div class="comment-trash text-right">
+                                                                @if(\Auth::user()->type!='client' || (\Auth::user()->type=='client' && in_array('delete checklist',$perArr)))
+                                                                    <a href="#" class="btn btn-outline btn-sm text-danger delete-checklist" data-url="{{route('task.checklist.destroy',[$checkList->task_id,$checkList->id])}}">
+                                                                        <i class="fas fa-trash"></i>
+                                                                    </a>
+                                                                @endif
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </li>
+                                        @endforeach
+                                    </ul>
+                                </div>
+                            </div>
+                        @endif
+                    @endcan
+                </div>
+                <div class="tab-pane fade" id="profile" role="tabpanel" aria-labelledby="profile-tab">
+                    <div class="form-group m-0">
+                        <form method="post" id="form-comment" data-action="{{route('comment.store',[$task->project_id,$task->id])}}">
+                            <textarea class="form-control" name="comment" placeholder="{{ __('Write message')}}" id="example-textarea" rows="3" required></textarea>
+                            <div class="text-right mt-10">
+                                <div class="btn-group mb-2 ml-2 d-none d-sm-inline-block">
+                                    <button type="button" class="btn badge-blue btn-xs rounded-pill my-auto text-white">{{ __('Submit')}}</button>
+                                </div>
+                            </div>
+                        </form>
+
+                        <div class="comment-holder mt-3" id="comments">
+                            @foreach($task->comments as $comment)
+                                <div class="media">
+                                    <div class="media-body">
+                                        <div class="d-flex justify-content-between align-items-end">
+                                            <div>
+                                                <h5 class="mt-0">{{(!empty($comment->user)?$comment->user->name : '')}}</h5>
+                                                <p class="mb-0 text-xs">{{$comment->comment}}</p>
+                                            </div>
+                                            <a href="#" class="btn btn-outline btn-sm text-danger delete-comment" data-url="{{route('comment.destroy',[$comment->id])}}">
+                                                <i class="fas fa-trash"></i>
+                                            </a>
+                                        </div>
+                                    </div>
+                                </div>
+                            @endforeach
+                        </div>
+                    </div>
+                </div>
+                <div class="tab-pane fade" id="contact" role="tabpanel" aria-labelledby="contact-tab">
+                    <form method="post" id="form-file" enctype="multipart/form-data" data-url="{{ route('comment.file.store',$task->id) }}">
+                        @csrf
+                        <div class="choose-file form-group">
+                            <label for="file" class="form-control-label">
+                                <div>{{__('Choose file here')}}</div>
+                                <input type="file" class="form-control" name="file" id="file" data-filename="file_update">
+                            </label>
+                            <p class="file_update"></p>
+                        </div>
+                        <br>
+                        <span class="invalid-feedback" id="file-error" role="alert"></span>
+                        <div class="text-right mt-10">
+                            <div class="btn-group mb-2 ml-2 d-none d-sm-inline-block">
+                                <button type="submit" class="btn badge-blue btn-xs rounded-pill my-auto text-white">{{ __('Upload')}}</button>
+                            </div>
+                        </div>
+                    </form>
+
+                    <div class="row my-3" id="comments-file">
+                        @foreach($task->taskFiles as $file)
+                            <div class="col-8 mb-2 file-{{$file->id}}">
+                                <h5 class="mt-0 mb-1 font-weight-bold text-sm"> {{$file->name}}</h5>
+                                <p class="m-0 text-xs">{{$file->file_size}}</p>
+                            </div>
+                            <div class="col-4 mb-2 file-{{$file->id}}">
+                                <div class="comment-trash" style="float: right">
+                                    <a download href="{{asset(Storage::url('tasks/'.$file->file))}}" class="btn btn-outline btn-sm text-primary m-0 px-2">
+                                        <i class="fa fa-download"></i>
+                                    </a>
+                                    <a href="#" class="btn btn-outline btn-sm red text-danger delete-comment-file m-0 px-2" data-id="{{$file->id}}" data-url="{{route('comment.file.destroy',[$file->id])}}">
+                                        <i class="fas fa-trash"></i>
+                                    </a>
+                                </div>
+                            </div>
+                        @endforeach
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
