@@ -143,6 +143,8 @@ Route::group(['middleware' => ['auth','XSS',],], function (){
     Route::delete('projects/bug/comment/{id}', 'ProjectsController@bugCommentDestroy')->name('bug.comment.destroy');
     Route::delete('projects/bug/file/{id}', 'ProjectsController@bugCommentDestroyFile')->name('bug.comment.file.destroy');
 
+    Route::get('projects/all/show', 'ProjectsController@getAllProjects')->name('get.all.projects');
+
 });
 
 Route::post('calender/event/date', 'CalenderController@dropEventDate')->name('calender.event.date');

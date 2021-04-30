@@ -1800,4 +1800,10 @@ class ProjectsController extends Controller
 
         return "true";
     }
+
+    public function getAllProjects(Request $request)
+    {
+        $projects = Projects::all();
+        return view('projects.indexProjects', compact('projects'));
+    }
 }

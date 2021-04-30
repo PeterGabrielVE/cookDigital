@@ -2,6 +2,18 @@
 @section('page-title')
     {{__('Dashboard')}}
 @endsection
+@section('action-button')
+
+        <div class="all-button-box row d-flex justify-content-end">
+            <div class="col-xl-2 col-lg-2 col-md-4 col-sm-6 col-6">
+                <a {{ (Request::segment(1) == 'projects')?'active open':''}}" href="{{ route('projects.index') }}" title="{{__('View All Projects')}}" class="btn btn-xs btn-white btn-icon-only width-auto"><i class="fas fa-tasks"></i></a>
+            </div>
+            <div class="col-xl-2 col-lg-2 col-md-4 col-sm-6 col-6">
+                <a href="{{ route('get.all.projects') }}" title="{{__('View All Projects')}}" class="btn btn-xs btn-white btn-icon-only btn-success width-auto" style="background-color: green"><i class="fas fa-tasks"></i></a>
+            </div>
+        </div>
+
+@endsection
 @push('script-page')
     <script>
         var SalesChart = (function () {
@@ -198,6 +210,7 @@
                 </div>
             </div>
         @endif
+
     </div>
     <div class="row">
         <div class="col-lg-12">
