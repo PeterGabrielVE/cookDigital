@@ -4,6 +4,16 @@
 @endsection
 @section('action-button')
 
+    @if(Auth::user()->type =='Administración')
+        <div class="all-button-box row d-flex justify-content-end">
+            <div class="col-xl-2 col-lg-2 col-md-4 col-sm-6 col-6">
+                <a {{ (Request::segment(1) == 'projects')?'active open':''}}" href="{{ route('projects.index') }}" title="{{__('View All Projects')}}" class="btn btn-xs btn-white btn-icon-only width-auto"><i class="fas fa-tasks"></i></a>
+            </div>
+            <div class="col-xl-2 col-lg-2 col-md-4 col-sm-6 col-6">
+                <a href="{{ route('get.projects.by.user',Auth::user()->id) }}" title="{{__('View All Projects')}}" class="btn btn-xs btn-white btn-icon-only btn-success width-auto" style="background-color: green"><i class="fas fa-tasks"></i></a>
+            </div>
+        </div>
+    @else
         <div class="all-button-box row d-flex justify-content-end">
             <div class="col-xl-2 col-lg-2 col-md-4 col-sm-6 col-6">
                 <a {{ (Request::segment(1) == 'projects')?'active open':''}}" href="{{ route('projects.index') }}" title="{{__('View All Projects')}}" class="btn btn-xs btn-white btn-icon-only width-auto"><i class="fas fa-tasks"></i></a>
@@ -12,7 +22,7 @@
                 <a href="{{ route('get.all.projects') }}" title="{{__('View All Projects')}}" class="btn btn-xs btn-white btn-icon-only btn-success width-auto" style="background-color: green"><i class="fas fa-tasks"></i></a>
             </div>
         </div>
-
+    @endif
 @endsection
 @push('script-page')
     <script>

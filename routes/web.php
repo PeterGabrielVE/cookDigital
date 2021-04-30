@@ -144,6 +144,7 @@ Route::group(['middleware' => ['auth','XSS',],], function (){
     Route::delete('projects/bug/file/{id}', 'ProjectsController@bugCommentDestroyFile')->name('bug.comment.file.destroy');
 
     Route::get('projects/all/show', 'ProjectsController@getAllProjects')->name('get.all.projects');
+    Route::get('projectsByUser/{id}', 'ProjectsController@projectsByUser')->name('get.projects.by.user');
 
 });
 

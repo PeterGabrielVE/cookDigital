@@ -346,9 +346,12 @@
                                                     <span class="font-weight-600 badge badge-xs badge-danger">{{ ucfirst($task->priority) }}</span>
                                                 @endif
                                             </div>
-                                            <p class="mb-0">
-                                                <span class="text-nowrap mb-2 d-inline-block text-xs">{{(!empty($task->description)) ? $task->description : '-'}}</span>
-                                            </p>
+                                            <div class="col-12" style="width:100%;">
+                                                <p class="mb-0">
+                                                    <span class="mb-2 d-inline-block text-xs">{{(!empty($task->description)) ? $task->description : '-'}}</span>
+                                                </p>
+                                            </div>
+
                                             <div class="row">
                                                 <div class="col-6 text-xs @if($task->taskCompleteCheckListCount()==$task->taskTotalCheckListCount() && $task->taskCompleteCheckListCount()!=0) text-success @else text-warning @endif">
                                                     <span>{{$task->taskCompleteCheckListCount()}}/{{$task->taskTotalCheckListCount()}}</span>

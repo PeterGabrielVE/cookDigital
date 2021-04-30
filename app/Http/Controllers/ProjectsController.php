@@ -1806,4 +1806,13 @@ class ProjectsController extends Controller
         $projects = Projects::all();
         return view('projects.indexProjects', compact('projects'));
     }
+
+    public function projectsByUser(Request $request,$id)
+    {
+        $projects = Projects::leftjoin('userprojects as user','projects.id','=','user.project_id')
+                    ->select('projects.*')
+                    ->where('user.user_id',$id)
+                    ->get();
+        return view('projects.indexProjects', compact('projects'));
+    }
 }

@@ -23,10 +23,7 @@
                             <thead>
                             <tr>
                                 <th> {{__('Name')}}</th>
-                                <th> {{__('Client')}}</th>
-                                <th> {{__('Price')}}</th>
-                                <th> {{__('Start Date')}}</th>
-                                <th> {{__('Due Date')}}</th>
+
                                 @if(\Auth::user()->type!='client')
                                     <th> {{__('Action')}}</th>
                                 @else
@@ -38,7 +35,9 @@
                             @foreach ($projects as $proj)
                                 <tr>
                                     <td class="">{{ !empty($proj->name)? $proj->name : ''}}</td>
-
+                                    <td> <a href="{{ route('projects.show',$proj->id) }}" class="btn btn-sm btn-white btn-icon-only width-auto">
+                                        {{__('Detail')}}
+                                    </a></td>
                                 </tr>
                             @endforeach
                             </tbody>
