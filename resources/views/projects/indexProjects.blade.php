@@ -3,15 +3,6 @@
     {{__('Projects')}}
 @endsection
 
-@section('action-button')
-
-        <div class="all-button-box row d-flex justify-content-end">
-            <div class="col-xl-2 col-lg-2 col-md-4 col-sm-6 col-6">
-                <a href="#" data-url="#" data-ajax-popup="true" data-title="{{__('Create Time Sheet')}}" class="btn btn-xs btn-white btn-icon-only width-auto"><i class="fas fa-plus"></i> {{__('Create')}} </a>
-            </div>
-        </div>
-
-@endsection
 
 @section('content')
     <div class="row">
