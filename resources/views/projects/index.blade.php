@@ -4,13 +4,21 @@
 @endsection
 
 @section('action-button')
-    @can('create project')
+
         <div class="all-button-box row d-flex justify-content-end">
-            <div class="col-xl-2 col-lg-2 col-md-4 col-sm-6 col-6">
-                <a href="#" data-url="{{ route('projects.create') }}" data-ajax-popup="true" data-title="{{__('Create New Project')}}" class="btn btn-xs btn-white btn-icon-only width-auto"><i class="fas fa-plus"></i> {{__('Create')}} </a>
+            <div class="col-xl-2 col-lg-2 col-md-4 col-sm-4 col-4">
+                <a {{ (Request::segment(1) == 'projects')?'active open':''}}" href="{{ route('projects.index') }}" title="{{__('View All Projects')}}" class="btn btn-xs btn-white btn-icon-only width-auto"><i class="fas fa-tasks"></i></a>
             </div>
+            <div class="col-xl-2 col-lg-2 col-md-4 col-sm-4 col-4">
+                <a href="{{ route('get.all.projects') }}" title="{{__('View All Projects')}}" class="btn btn-xs btn-white btn-icon-only btn-success width-auto" style="background-color: green"><i class="fas fa-tasks"></i></a>
+            </div>
+            @can('create project')
+                <div class="col-xl-2 col-lg-2 col-md-4 col-sm-4 col-4">
+                    <a href="#" data-url="{{ route('projects.create') }}" data-ajax-popup="true" data-title="{{__('Create New Project')}}" class="btn btn-xs btn-white btn-icon-only width-auto"><i class="fas fa-plus"></i> {{__('Create')}} </a>
+                </div>
+            @endcan
         </div>
-    @endcan
+
 @endsection
 
 @section('content')

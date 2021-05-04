@@ -39,8 +39,8 @@ class ProjectsController extends Controller
             }
             else
             {
-                $projects = $user->projects;
-
+                //$projects = $user->projects;
+                $projects = Projects::all();
             }
 
             $project_status = Projects::$project_status;
