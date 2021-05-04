@@ -658,25 +658,14 @@ class ProjectsController extends Controller
     {
         $user    = Auth::user();
         $project = Projects::where('id', $project_id)->first();
-
-        if(!empty($project) && $project->created_by == Auth::user()->creatorId())
+        $tasks = Task::where('project_id', $project_id)->get();
+        if(!empty($project))
         {
-            if($user->type != 'company')
-            {
-                $arrProjectUsers = $project->project_user()->pluck('user_id')->toArray();
-                array_push($arrProjectUsers, $project->client);
 
-                if(!in_array($user->id, $arrProjectUsers))
-                {
-                    return redirect()->back()->with('error', __('Permission denied.'));
-                }
-            }
+            $stages = Projectstages::orderBy('order', 'ASC')->get();
 
-            $stages      = Projectstages::where('created_by', '=', Auth::user()->creatorId())->orderBy('order', 'ASC')->get();
-            $permissions = $project->client_project_permission();
-            $perArr      = (!empty($permissions) ? explode(',', $permissions->permissions) : []);
 
-            return view('projects.taskboard', compact('project', 'stages', 'perArr'));
+            return view('projects.taskboard', compact('project', 'stages','tasks'));
         }
         else
         {

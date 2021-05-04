@@ -27,6 +27,13 @@ class Projectstages extends Model
         }
     }
 
+    public function tasks2($stage_id,$project_id)
+    {
+
+        return Task::where('stage', '=', $stage_id)->where('project_id', '=', $project_id)->orderBy('order')->get();
+
+    }
+
     public static function getChartData()
     {
         $usr     = \Auth::user();

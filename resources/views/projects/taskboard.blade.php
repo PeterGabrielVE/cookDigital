@@ -303,11 +303,9 @@
             @endphp
             <div class="board" data-plugin="dragula" data-containers='{!! json_encode($json) !!}'>
                 @foreach($stages as $stage)
-                    @if(\Auth::user()->type =='client' || \Auth::user()->type =='company')
-                        @php $tasks =$stage->tasks($project->id) @endphp
-                    @else
-                        @php $tasks =$stage->tasks($project->id)     @endphp
-                    @endif
+
+                    @php $tasks =$stage->tasks2($stage->id,$project->id)     @endphp
+
                     <div class="tasks">
                         <h5 class="mt-0 mb-0 task-header">{{$stage->name}} (<span class="count">{{count($tasks)}}</span>)</h5>
                         <div id="lead-list-{{$stage->id}}" data-status="{{$stage->name}}" data-id="{{$stage->id}}" class="task-list-items for-tasks mb-2">
