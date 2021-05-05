@@ -25,3 +25,5 @@ Homestead.json
 /.vagrant
 .phpunit.result.cache
 storage/logs/laravel.log
+storage/framework/cache/data/85/5f/855f92484c8c414d36c1b25cb24876e30229cbbf
+*.log

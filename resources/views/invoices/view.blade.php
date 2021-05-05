@@ -127,21 +127,21 @@
                 <a href="#" class="btn btn-xs btn-white btn-icon-only width-auto" data-url="{{ route('invoices.edit',$invoice->id) }}" data-ajax-popup="true" data-title="{{__('Edit Invoice')}}" data-original-title="{{__('Edit')}}"><i class="fas fa-pencil-alt"></i> {{__('Edit')}}</a>
             </div>
         @endcan
-        
+
             <div class="col-xl-2 col-lg-2 col-md-4 col-sm-6 col-6">
                 <a href="{{ route('invoice.sent',$invoice->id) }}" class="btn btn-xs btn-white btn-icon-only width-auto"><i class="fas fa-reply"></i> {{__('Send Invoice Mail')}}</a>
             </div>
-        
-       
+
+
             <div class="col-xl-3 col-lg-3 col-md-4 col-sm-6 col-6">
                 <a href="{{ route('invoice.payment.reminder',$invoice->id) }}" class="btn btn-xs btn-white btn-icon-only width-auto"><i class="fas fa-money-check"></i> {{__('Payment Reminder')}}</a>
             </div>
-       
-        @can('custom mail send invoice')
+
+        <!-- can('custom mail send invoice') -->
             <div class="col-xl-2 col-lg-2 col-md-4 col-sm-6 col-6">
                 <a href="#" class="btn btn-xs btn-white btn-icon-only width-auto" data-url="{{ route('invoice.custom.send',$invoice->id) }}" data-ajax-popup="true" data-title="{{__('Send Invoice')}}" title="{{__('send Invoice')}}"><i class="fas fa-pencil-alt"></i> {{__('Send Invoice Mail')}}</a>
             </div>
-        @endcan
+        <!-- endcan -->
         <div class="col-xl-2 col-lg-2 col-md-4 col-sm-12 col-12">
             <a href="{{ route('get.invoice',Crypt::encrypt($invoice->id)) }}" class="btn btn-xs bg-warning btn-white btn-icon-only width-auto" title="{{__('Print Invoice')}}" target="_blanks"><i class="fas fa-print"></i> {{__('Print')}}</a>
         </div>

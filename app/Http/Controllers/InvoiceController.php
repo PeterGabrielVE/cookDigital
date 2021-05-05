@@ -795,8 +795,8 @@ class InvoiceController extends Controller
 
     public function sent($id)
     {
-        if(Auth::user()->can('send invoice'))
-        {
+        /*if(Auth::user()->can('send invoice'))
+        {*/
             $invoice          = Invoice::where('invoice_id', $id)->first();
             $client           = !empty($invoice->project) ? $invoice->project->client() : '';
             $invoice->name    = !empty($client) ? $client->name : 'Dear';
@@ -814,11 +814,11 @@ class InvoiceController extends Controller
             }
 
             return redirect()->back()->with('success', __('Invoice successfully sent.') . ((isset($smtp_error)) ? '<br> <span class="text-danger">' . $smtp_error . '</span>' : ''));
-        }
+       /* }
         else
         {
             return redirect()->back()->with('error', __('Permission denied.'));
-        }
+        }*/
     }
 
     public function customMail($invoice_id)
