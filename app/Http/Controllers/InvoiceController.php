@@ -797,13 +797,15 @@ class InvoiceController extends Controller
     {
         /*if(Auth::user()->can('send invoice'))
         {*/
-            $invoice          = Invoice::where('invoice_id', $id)->first();
+
+            $invoice          = Invoice::find($id);
             $client           = !empty($invoice->project) ? $invoice->project->client() : '';
             $invoice->name    = !empty($client) ? $client->name : 'Dear';
             $email            = !empty($client) ? $client->email : '';
             $invoice->invoice = Auth::user()->invoiceNumberFormat($invoice->invoice_id);
             $invoiceId        = Crypt::encrypt($invoice->invoice_id);
             $invoice->url     = route('get.invoice', $invoiceId);
+
             try
             {
                 Mail::to($email)->send(new InvoiceSend($invoice));
