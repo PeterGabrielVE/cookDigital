@@ -283,13 +283,18 @@
 @endsection
 
 @section('action-button')
-    @can('create task')
+
         <div class="all-button-box row d-flex justify-content-end">
-            <div class="col-xl-2 col-lg-2 col-md-4 col-sm-6 col-6">
-                <a href="#" data-url="{{ route('task.create',$project->id) }}" data-ajax-popup="true" data-title="{{__('Add New Task')}}" class="btn btn-xs btn-white btn-icon-only width-auto"><i class="fas fa-plus"></i> {{__('Create')}} </a>
+            <div class="col-xl-2 col-lg-2 col-md-4 col-sm-4 col-4">
+                <a href="{{ route('get.tasksList',$project->id) }}" title="{{__('View All Tasks')}}" class="btn btn-xs btn-white btn-icon-only btn-success width-auto" style="background-color: green"><i class="fas fa-tasks"></i></a>
             </div>
+            @can('create task')
+                <div class="col-xl-2 col-lg-2 col-md-4 col-sm-4 col-4">
+                    <a href="#" data-url="{{ route('task.create',$project->id) }}" data-ajax-popup="true" data-title="{{__('Add New Task')}}" class="btn btn-xs btn-white btn-icon-only width-auto"><i class="fas fa-plus"></i> {{__('Create')}} </a>
+                </div>
+            @endcan
         </div>
-    @endcan
+
 @endsection
 
 @section('content')

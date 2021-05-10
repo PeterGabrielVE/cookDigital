@@ -87,9 +87,16 @@
                 @if(Gate::check('manage project'))
                     <li class="nav-item">
                         <a class="nav-link {{ (Request::segment(1) == 'projects')?'active open':''}}" href="{{ route('projects.index') }}">
-                            <i class="fas fa-tasks"></i> {{__('Project')}}
+                            <i class="fas fa-briefcase"></i> {{__('Project')}}
                         </a>
                     </li>
+                @endif
+                @if(Gate::check('manage project'))
+                <li class="nav-item">
+                    <a class="nav-link {{ (Request::segment(1) == 'tasks')?'active open':''}}" href="{{ route('getAllTasks') }}">
+                        <i class="fas fa-tasks"></i> {{__('Tasks')}}
+                    </a>
+                </li>
                 @endif
                 @if(Gate::check('manage timesheet'))
                     <li class="nav-item">

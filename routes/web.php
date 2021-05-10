@@ -217,3 +217,5 @@ Route::resource('notes', 'NoteController')->middleware(['auth','XSS',]);
 Route::post('/invoices/{id}/payment',['as' => 'client.invoice.payment','uses' =>'InvoiceController@addPayment'])->middleware(['auth', 'XSS']);
 Route::post('/{id}/pay-with-paypal',['as' => 'client.pay.with.paypal','uses' =>'PaypalController@clientPayWithPaypal'])->middleware(['auth','XSS']);
 Route::get('/{id}/get-payment-status',['as' => 'client.get.payment.status','uses' =>'PaypalController@clientGetPaymentStatus'])->middleware(['auth','XSS']);
+Route::get('get/tasksList/{id}',['as' => 'get.tasksList','uses' =>'ProjectsController@taskBoardList'])->middleware(['auth','XSS']);
+Route::get('getAllTasks',['as' => 'getAllTasks','uses' =>'ProjectsController@getAllTasks'])->middleware(['auth','XSS']);

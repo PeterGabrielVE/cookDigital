@@ -46,7 +46,9 @@ class Task extends Model
     public function milestone(){
         return $this->hasOne('App\Milestone','id','milestone_id');
     }
-
+    public function project(){
+        return $this->hasOne('App\Projects','id','project_id');
+    }
 
 
 }

@@ -1804,4 +1804,26 @@ class ProjectsController extends Controller
                     ->get();
         return view('projects.indexProjects', compact('projects'));
     }
+
+    public function taskBoardList($project_id)
+    {
+        $user    = Auth::user();
+        $project = Projects::where('id', $project_id)->first();
+        $tasks = Task::where('project_id', $project_id)->get();
+        if(!empty($project))
+        {
+            return view('projects.taskboardList', compact('project','tasks'));
+        }
+        else
+        {
+            return redirect()->back()->with('error', __('Permission denied.'));
+        }
+    }
+
+    public function getAllTasks()
+    {
+        $tasks = Task::all();
+        return view('projects.taskboardList', compact('tasks'));
+
+    }
 }
